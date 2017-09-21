@@ -1,4 +1,4 @@
-##Dispatch_source
+## Dispatch_source
 
 使用 Dispatch Source 而不使用 dispatch_async 的唯一原因就是利用联结的优势。
 
@@ -10,14 +10,14 @@
 
 
 
-####一、创建dispatch源
+#### 一、创建dispatch源
 
 ```
 dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, dispatch_get_main_queue());
 
 ```
 
-#####参数:
+##### 参数:
 
 | 参数         | 意义            		  | 
 |:-----------:|:---------------      | 
@@ -27,7 +27,7 @@ dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD,
 | queue       | 自定义源需要的一个队列，用来处理所有的响应句柄（block）   | 
 
 
-#####Dispatch Source可处理的所有事件:
+##### Dispatch Source可处理的所有事件:
 
 | 名称                            | 意义                 | 
 |:------------------------------ |:---------------      | 
@@ -44,7 +44,7 @@ dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD,
 
 自定义事件可以使用的只有`DISPATCH_SOURCE_TYPE_DATA_ADD`和`DISPATCH_SOURCE_TYPE_DATA_OR`这两种类型，我们这里也只讨论这两种类型。
 
-####二、其他函数:
+#### 二、其他函数:
 
 ```
 dispatch_suspend(queue) //挂起队列
@@ -59,7 +59,7 @@ dispatch_source_get_data(source) //得到分派源的数据
 
 ```
 
-####三、代码:
+#### 三、代码:
 ```
 //创建source，以DISPATCH_SOURCE_TYPE_DATA_ADD的方式进行累加，而DISPATCH_SOURCE_TYPE_DATA_OR是对结果进行二进制或运算
 dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, dispatch_get_main_queue());
@@ -118,7 +118,7 @@ dispatch_async(myqueue, ^ {
 此时不论type是`DISPATCH_SOURCE_TYPE_DATA_ADD`或`DISPATCH_SOURCE_TYPE_DATA_OR`，结果都是这个，因为这两种type只影响联结时的value。对非联结的情况没有影响。
 
 
-####四、例子:
+#### 四、例子:
 当我们更新进度条时，可能在多个线程上同时做很多任务，每个任务完成后，刷新界面，更新一点进度条的进度，因为每个任务都更新一次进度条，造成界面刷新次数太多，可能会导致界面卡顿，所以此时利用Dispatch Source能很好的解决这种情况，因为Dispatch Source在刷新太频繁的时候会自动联结起来，下面就用代码实现一下这个场景。
 
 ```
