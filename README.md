@@ -14,7 +14,6 @@
 
 ```
 dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, dispatch_get_main_queue());
-
 ```
 
 ##### 参数:
@@ -56,7 +55,6 @@ dispatch_source_merge_data(source, 1) //向分派源发送事件，需要注意�
 dispatch_source_set_event_handler(source, block) //设置响应分派源事件的block，在分派源指定的队列上运行
 
 dispatch_source_get_data(source) //得到分派源的数据
-
 ```
 
 #### 三、代码:
@@ -87,7 +85,6 @@ dispatch_async(myqueue, ^ {
         //[NSThread sleepForTimeInterval:1.0];
     }
 });
-
 ```
 
 上面的这个例子，因为for循环运算速度非常快，系统会自动把这4次事件联结起来，可以看到最终事件触发的句柄只会执行一次。打印出来的结果为:
@@ -144,7 +141,6 @@ for (NSUInteger index = 0; index < 100; index++) {
         dispatch_source_merge_data(source, 1);
     });
 }
-
 ```
 
 上面相等于启动了100个任务，每个任务耗时0.02秒，打印结果如下：
