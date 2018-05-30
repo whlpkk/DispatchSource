@@ -12,7 +12,7 @@
 
 #### 一、创建dispatch源
 
-```
+``` objc
 dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, dispatch_get_main_queue());
 ```
 
@@ -45,7 +45,7 @@ dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD,
 
 #### 二、其他函数:
 
-```
+``` objc
 dispatch_suspend(queue) //挂起队列
 
 dispatch_resume(source) //分派源创建时默认处于挂起状态，在分派源分派处理程序之前必须先恢复
@@ -58,7 +58,7 @@ dispatch_source_get_data(source) //得到分派源的数据
 ```
 
 #### 三、代码:
-```
+``` objc
 //创建source，以DISPATCH_SOURCE_TYPE_DATA_ADD的方式进行累加，而DISPATCH_SOURCE_TYPE_DATA_OR是对结果进行二进制或运算
 dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, dispatch_get_main_queue());
 
@@ -118,7 +118,7 @@ dispatch_async(myqueue, ^ {
 #### 四、例子:
 当我们更新进度条时，可能在多个线程上同时做很多任务，每个任务完成后，刷新界面，更新一点进度条的进度，因为每个任务都更新一次进度条，造成界面刷新次数太多，可能会导致界面卡顿，所以此时利用Dispatch Source能很好的解决这种情况，因为Dispatch Source在刷新太频繁的时候会自动联结起来，下面就用代码实现一下这个场景。
 
-```
+``` objc
 //1、指定DISPATCH_SOURCE_TYPE_DATA_ADD，做成Dispatch Source(分派源)。设定Main Dispatch Queue 为追加处理的Dispatch Queue
 dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, dispatch_get_main_queue());
 
